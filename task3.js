@@ -2,23 +2,22 @@ import { createServer } from "http";
 import { parse } from "url";
 
 const calcGcd = (x, y) => {
-  if (y === 0) return x;
+  if (y === 0n) return x;
 
   return calcGcd(y, x % y);
 };
 
 const calcLcm = (x, y) => {
-  if (
-    typeof x !== "number" ||
-    typeof y !== "number" ||
-    x < 1 ||
-    y < 1 ||
-    isNaN(x) ||
-    isNaN(y)
-  )
-    return NaN;
+  try {
+    const bigX = BigInt(x);
+    const bigY = BigInt(y);
 
-  return (x * y) / calcGcd(x, y);
+    if (bigX <= 0n || bigY <= 0n) return null;
+
+    return (bigX * bigY) / calcGcd(bigX, bigY);
+  } catch {
+    return null;
+  }
 };
 
 const server = createServer((req, res) => {
@@ -30,8 +29,8 @@ const server = createServer((req, res) => {
 
   if (pathname === "/kavidmi_gmail_com" || pathname === "/") {
     if (req.method === "GET") {
-      const result = calcLcm(+x, +y);
-      res.end(isNaN(result) ? "NaN" : `${result}`);
+      const result = calcLcm(x, y);
+      res.end(result === null ? "NaN" : `${result}`);
     }
   }
 });
