@@ -1,6 +1,7 @@
 {
   "name": "lcm-server",
   "version": "1.0.0",
+  "type": "module",
   "main": "task3.js",
   "scripts": {
     "start": "node task3.js"
