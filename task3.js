@@ -31,7 +31,7 @@ const server = createServer((req, res) => {
   if (pathname === "/kavidmi_gmail_com" || pathname === "/") {
     if (req.method === "GET") {
       const result = calcLcm(+x, +y);
-      res.end(`${result}`);
+      res.end(isNaN(result) ? "NaN" : `${result}`);
     }
   }
 });
