@@ -22,14 +22,17 @@ const calcLcm = (x, y) => {
 };
 
 const server = createServer((req, res) => {
-  if (req.method === "GET") {
-    const parsedUrl = parse(req.url, true);
-    const { x, y } = parsedUrl.query;
+  const parsedUrl = parse(req.url, true);
+  const { x, y } = parsedUrl.query;
+  const pathname = parsedUrl.pathname;
 
-    res.writeHead(200, { "Content-Type": "text/plain" });
+  res.writeHead(200, { "Content-Type": "text/plain" });
 
-    const result = calcLcm(+x, +y);
-    res.end(`${result}`);
+  if (pathname === "/kavidmi_gmail_com" || pathname === "/") {
+    if (req.method === "GET") {
+      const result = calcLcm(+x, +y);
+      res.end(`${result}`);
+    }
   }
 });
 
